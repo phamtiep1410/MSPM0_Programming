@@ -314,147 +314,147 @@ This structure holds the parameters and state variables for the PR controller.
 
 This header file provides a modular and reusable implementation of PI and PR controllers for various control system applications.
 
-# Source File Description: `TOGI.c`
+# TOGI PLL Library Documentation
 
-This source file implements a **Second-Order Generalized Integrator Phase-Locked Loop (TOGI_PLL)** algorithm for grid synchronization. The implementation is based on the paper:
-
-> Zhang, C., Zhao, X., Wang, X., Chai, X., Zhang, Z., and Guo, X., 2018.  
-> "A grid synchronization PLL method based on mixed second-and third-order generalized integrator for DC offset elimination and frequency adaptability."  
-> *IEEE Journal of Emerging and Selected Topics in Power Electronics, 6(3), pp.1517-1526.*
-
-The TOGI_PLL algorithm is designed to estimate the phase (`phi`) and frequency (`omega`) of an AC signal, making it suitable for grid-connected systems requiring precise synchronization.
+**Author**: The-Tiep Pham  
+**Revision**: April 06, 2025  
 
 ---
 
-## **1. Functions**
+## Overview
 
-### **1.1 `TOGI_PLL_Params_Init`**
-#### **Purpose**
-Initializes the `TOGI_PLL_Params_Typedef` structure with the specified parameters.
+This library implements a grid synchronization technique using a **Time-Optimal Generalized Integrator Phase-Locked Loop (TOGI-PLL)**. It provides robust performance under conditions such as:
 
-#### **Input Parameters**
-- `TOGI_PLL_Params`: Pointer to the `TOGI_PLL_Params_Typedef` structure to initialize.
-- `k`: Gain factor for the TOGI integrator.
-- `kp`: Proportional gain for the PLL controller.
-- `ki`: Integral gain for the PLL controller.
-- `w0`: Nominal angular frequency of the AC signal (e.g., grid frequency in radians per second).
-- `w0Ts`: Precomputed term for the nominal frequency and sampling time.
-- `Ts`: Sampling time (time interval between successive updates).
+- **DC offset presence**
+- **Frequency deviation**
+- **Unbalanced or distorted voltage**
 
-#### **Code Behavior**
-- Resets all internal state variables (`u1`, `u2`, `u3`) to zero.
-- Assigns the provided gains (`k`, `kp`, `ki`) and nominal frequency (`w0`) to the respective fields.
-- Initializes the phase (`phi`), frequency (`omega`), and other parameters to their default values.
-- Sets the reset flag (`reset_flag`) to `0` (normal operation).
+It is inspired by the following publication:
+
+> **Zhang, C. et al. (2018)**  
+> *A grid synchronization PLL method based on mixed second- and third-order generalized integrator for DC offset elimination and frequency adaptability*  
+> IEEE Journal of Emerging and Selected Topics in Power Electronics, 6(3), pp.1517–1526.
 
 ---
 
-### **1.2 `TOGI_PLL`**
-#### **Purpose**
-Implements the TOGI_PLL algorithm to estimate the phase (`phi`) and frequency (`omega`) of the input AC signal.
+## Purpose of the TOGI Library
 
-#### **Input Parameters**
-- `TOGI_PLL_Params`: Pointer to the `TOGI_PLL_Params_Typedef` structure containing the PLL parameters and state variables.
-- `vac_sens`: The sensed AC voltage signal.
-- `Ts`: Sampling time (time interval between successive updates).
+The goal is to synchronize with a grid signal (e.g., grid voltage) by extracting the **phase angle**, **angular frequency**, and **dq-axis components** while rejecting any **DC offset** in the measurement. This is critical for applications such as:
 
-#### **Code Behavior**
-1. **Error Calculation**:
-   - Computes the error between the input signal (`vac_sens`) and the internal state variable `u1`.
-
-2. **TOGI Integrator Update**:
-   - Updates the internal state variables (`u1`, `u2`, `u3`) using the TOGI equations:
-     - `u2` is updated based on `u1` and the nominal frequency (`w0Ts`).
-     - `u1` is updated using the error, gain factor (`k`), and `u2`.
-     - `u3` is updated similarly to `u1`.
-
-3. **Direct-Axis Voltage (`vd`) Calculation**:
-   - Computes `vd` using the estimated phase (`phi`) and the internal state variables (`v_alpha` and `v_beta`).
-
-4. **PI Controller**:
-   - Computes the proportional term (`P_Term`) and updates the integral term (`I_Term`) based on `vd`.
-   - Updates the frequency (`omega`) using the PI controller output and the nominal frequency (`w0`).
-
-5. **Phase Update**:
-   - Updates the phase (`phi`) using the estimated frequency and sampling time.
-   - Resets `phi` to `0.0f` if it exceeds `2π` or `-2π`.
+- Grid-connected inverters
+- Synchronization of control systems to AC mains
+- Frequency estimation in digital controllers
 
 ---
 
-### **1.3 `TOGI_PLL_Params_Reset`**
-#### **Purpose**
-Resets the internal state variables of the `TOGI_PLL_Params_Typedef` structure.
+## Data Structure: `TOGI_PLL_Params_Typedef`
 
-#### **Input Parameters**
-- `TOGI_PLL_Params`: Pointer to the `TOGI_PLL_Params_Typedef` structure to reset.
+This structure holds all the dynamic variables of the PLL:
 
-#### **Code Behavior**
-- Resets all internal state variables (`u1`, `u2`, `u3`) to zero.
-- Resets the phase (`phi`), frequency (`omega`), and integral term (`I_Term`) to their default values.
-
----
-
-## **2. Key Equations**
-
-1. **TOGI Integrator Update**:
-   - `u2 += u1 * w0Ts`
-   - `u1 += (error * k - u2) * w0Ts`
-   - `u3 += (error * k - u3) * w0Ts`
-
-2. **Direct-Axis Voltage (`vd`)**:
-   - `vd = cos(phi) * v_alpha + sin(phi) * v_beta`
-
-3. **PI Controller**:
-   - `P_Term = vd * kp`
-   - `I_Term += vd * ki * Ts`
-   - `omega = P_Term + I_Term + w0`
-
-4. **Phase Update**:
-   - `phi += omega * Ts`
+| Field            | Description |
+|------------------|-------------|
+| `Vpk`            | Peak detected voltage amplitude |
+| `Omega`          | Estimated grid angular frequency (rad/s) |
+| `theta`          | Estimated grid phase angle (radians) |
+| `V_Offset`       | Estimated DC component of the input |
+| `Val`, `Vbe`     | Generalized integrator outputs (α-β) |
+| `Val_Real`, `Vbe_Real` | Corrected α-β voltages (DC-free) |
+| `Vd`, `Vq`       | d-q voltages (used for PLL regulation) |
+| `Sine`, `Cose`   | Sine and cosine of the phase angle |
+| `TOGI_Ready_Flag`| Indicates if PLL is locked and ready (1: true, 0: false) |
 
 ---
 
-## **3. Applications**
-The TOGI_PLL algorithm is commonly used in grid-connected systems for:
-- **Grid Synchronization**:
-  - Estimating the phase and frequency of the grid voltage for synchronizing inverters.
-- **Power Quality Monitoring**:
-  - Tracking the phase and frequency of AC signals for power system analysis.
-- **Control of Grid-Tied Inverters**:
-  - Ensuring proper synchronization of inverters with the grid to avoid phase mismatches.
+## Function: `void TOGI_PLL_Params_Init(...)`
+
+### **Purpose**  
+Initializes all fields in the `TOGI_PLL_Params_Typedef` structure to default values (mostly zeros). This function should be called once before starting the PLL loop.
+
+### **Input**  
+- `TOGI_PLL_Params`: Pointer to the structure that stores the internal states.
+
+### **Output**  
+- The structure is updated with default values.
 
 ---
 
-## **4. Example Usage**
+## Function: `void TOGI_PLL(...)`
+
+### **Purpose**  
+Executes one iteration of the TOGI PLL. It processes the input voltage to estimate the grid phase, frequency, and voltage components in α-β and d-q frames.
+
+### **Inputs**  
+| Name         | Type   | Description |
+|--------------|--------|-------------|
+| `TOGI_PLL_Params` | `TOGI_PLL_Params_Typedef*` | Pointer to the state structure |
+| `Vac`        | `float`| Instantaneous AC input voltage |
+| `Ts`         | `float`| Sampling period (seconds) |
+| `W0`         | `float`| Nominal angular frequency (e.g., 2π×50 = 314.16 rad/s) |
+| `kp_PLL`     | `float`| Proportional gain for PI controller |
+| `ki_PLL`     | `float`| Integral gain for PI controller |
+
+### **Outputs**  
+- Updates the internal state structure:
+  - `Omega`, `theta` are updated to reflect phase and frequency.
+  - `Vd`, `Vq` are computed for synchronization control.
+  - `TOGI_Ready_Flag` is set to 1 if the PLL is stable.
+
+---
+
+### **How It Works**
+
+1. **DC Offset Elimination**  
+   - The voltage input is filtered through second and third-order integrators to isolate the DC component (`V_Offset`) and obtain α-β components (`Val`, `Vbe`).
+
+2. **α-β to d-q Transformation**  
+   - Using the estimated `theta`, the algorithm projects α-β voltages into the rotating d-q frame.
+
+3. **PLL PI Controller**  
+   - The `Vd` component is fed into a PI controller.
+   - `Omega` is adjusted based on the controller output, tracking the grid frequency.
+   - The phase `theta` is incremented based on `Omega`.
+
+4. **Lock Detection**  
+   - If `Vd` is near zero and `-Vq` exceeds a threshold, it means the PLL has locked onto the signal, and `TOGI_Ready_Flag` is set.
+
+5. **Phase Wrap-around**  
+   - `theta` is wrapped to [0, 2π] after each update.
+
+---
+
+## Suggested Parameters
+
+| Parameter | Typical Value | Notes |
+|----------|---------------|-------|
+| `Ts`     | `1e-4` s       | For 10 kHz control frequency |
+| `W0`     | `314.16` rad/s | 50 Hz system |
+| `kp_PLL` | `10.0`         | Proportional gain (tune based on bandwidth) |
+| `ki_PLL` | `1000.0`       | Integral gain (to eliminate steady-state error) |
+
+---
+
+## Applications
+
+- Digital grid synchronization
+- AC signal conditioning
+- Frequency/phase tracking
+- Real-time embedded control (e.g., STM32, TMS320, etc.)
+
+---
+
+## Example Usage (Pseudocode)
+
 ```c
-#include "TOGI.h"
+TOGI_PLL_Params_Typedef pll_params;
+TOGI_PLL_Params_Init(&pll_params);
 
-int main() {
-    TOGI_PLL_Params_Typedef pll_params;
+while (1) {
+    float Vac = read_adc_voltage();
+    TOGI_PLL(&pll_params, Vac, 1e-4, 314.16, 10.0, 1000.0);
 
-    // Initialize the TOGI_PLL parameters
-    TOGI_PLL_Params_Init(&pll_params, 0.5f, 1.0f, 0.1f, 314.16f, 0.001f, 0.001f);
-
-    // Simulated AC voltage signal
-    float vac_sens = 230.0f; // Example input signal
-    float Ts = 0.001f;       // Sampling time (1 ms)
-
-    // Run the TOGI_PLL algorithm
-    TOGI_PLL(&pll_params, vac_sens, Ts);
-
-    // Print the estimated phase and frequency
-    printf("Estimated Frequency: %f\n", pll_params.omega);
-    printf("Estimated Phase: %f\n", pll_params.phi);
-
-    return 0;
+    if (pll_params.TOGI_Ready_Flag) {
+        use_theta(pll_params.theta);  // Feed to control loop
+    }
 }
 ```
-## **5. Key Features**
-- Second-Order Generalized Integrator:
-  - Provides accurate phase and frequency estimation for AC signals.
-- Proportional-Integral Controller:
-  - Ensures stable and precise tracking of the input signal.
-- Phase Reset:
-  - Automatically resets the phase (phi) when it exceeds 2π or -2π.
-  
-This implementation is robust and suitable for grid-connected systems requiring precise phase and frequency estimation.
+

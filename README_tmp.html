@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>README.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="software-architecture-for-general-power-converter">Software Architecture for General Power Converter</h1>
+<p>This document outlines the structure and functions required to develop firmware for a power converter system. The firmware is divided into three layers: Driver Layer, Middleware Layer, and Application Layer.</p>
+<hr>
+<h2 id="1-driver-layer">1. Driver Layer</h2>
+<p>The Driver Layer interfaces directly with hardware components. It provides low-level functions to initialize, configure, and control peripherals, abstracting hardware details for higher layers.</p>
+<h3 id="responsibilities">Responsibilities:</h3>
+<ul>
+<li>Hardware initialization and configuration.</li>
+<li>Direct control of peripherals (e.g., ADC, PWM, GPIO, UART, SPI, CAN).</li>
+<li>Providing interrupt service routines (ISRs) for handling hardware events.</li>
+</ul>
+<h3 id="functions-in-the-driver-layer">Functions in the Driver Layer:</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Peripheral Drivers</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">ADC_Init</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">ADC_StartConversion</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">uint16_t</span> <span class="hljs-title">ADC_ReadValue</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">PWM_Init</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">PWM_SetDutyCycle</span><span class="hljs-params">(<span class="hljs-keyword">float</span> dutyCycle)</span></span>; <span class="hljs-comment">// Duty cycle range: 0.0 (0%) to 1.0 (100%)</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">PWM_Start</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">PWM_Stop</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">GPIO_Init</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">GPIO_SetPin</span><span class="hljs-params">(<span class="hljs-keyword">uint8_t</span> pin, <span class="hljs-keyword">uint8_t</span> state)</span></span>; <span class="hljs-comment">// State: 0 (LOW), 1 (HIGH)</span>
+<span class="hljs-function"><span class="hljs-keyword">uint8_t</span> <span class="hljs-title">GPIO_ReadPin</span><span class="hljs-params">(<span class="hljs-keyword">uint8_t</span> pin)</span></span>;
+
+<span class="hljs-comment">// Communication Interfaces</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">UART_Init</span><span class="hljs-params">(<span class="hljs-keyword">uint32_t</span> baudRate)</span></span>; <span class="hljs-comment">// Baud rate in bits per second</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">UART_SendData</span><span class="hljs-params">(<span class="hljs-keyword">uint8_t</span> *data, <span class="hljs-keyword">uint16_t</span> length)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">UART_ReceiveData</span><span class="hljs-params">(<span class="hljs-keyword">uint8_t</span> *<span class="hljs-built_in">buffer</span>, <span class="hljs-keyword">uint16_t</span> length)</span></span>;
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">SPI_Init</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">SPI_Transmit</span><span class="hljs-params">(<span class="hljs-keyword">uint8_t</span> *data, <span class="hljs-keyword">uint16_t</span> length)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">SPI_Receive</span><span class="hljs-params">(<span class="hljs-keyword">uint8_t</span> *<span class="hljs-built_in">buffer</span>, <span class="hljs-keyword">uint16_t</span> length)</span></span>;
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">CAN_Init</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>; <span class="hljs-comment">// Initializes the CAN peripheral</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">CAN_DeInit</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>; <span class="hljs-comment">// Deinitializes the CAN peripheral</span>
+
+<span class="hljs-comment">// Interrupt Service Routines</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">ISR_ADC</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">ISR_PWM</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">ISR_GPIO</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;
+
+</div></code></pre>
+<h2 id="2-middleware-layer">2. Middleware Layer</h2>
+<p>The Middleware Layer acts as a bridge between the Driver Layer and the Application Layer. It provides higher-level functionality, such as communication protocols, control algorithms, task scheduling, and data processing.</p>
+<h3 id="responsibilities">Responsibilities:</h3>
+<ul>
+<li>Implementing communication protocols (e.g., CAN, Modbus).</li>
+<li>Providing control algorithms for system operation (e.g., PFC and DAB control loops).</li>
+<li>Managing task scheduling and real-time operations.</li>
+<li>Processing data (e.g., filtering, buffering).</li>
+<li>Handling system configurations and fault management.</li>
+</ul>
+<h3 id="functions-in-the-middleware-layer">Functions in the Middleware Layer:</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Communication Protocols</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">CAN_SendMessage</span><span class="hljs-params">(<span class="hljs-keyword">uint32_t</span> id, <span class="hljs-keyword">uint8_t</span> *data, <span class="hljs-keyword">uint8_t</span> length)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">CAN_ReceiveMessage</span><span class="hljs-params">(<span class="hljs-keyword">uint32_t</span> *id, <span class="hljs-keyword">uint8_t</span> *data, <span class="hljs-keyword">uint8_t</span> *length)</span></span>;
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Modbus_Init</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>; <span class="hljs-comment">// Initializes the Modbus protocol</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Modbus_ProcessRequest</span><span class="hljs-params">(<span class="hljs-keyword">uint8_t</span> *request, <span class="hljs-keyword">uint8_t</span> *response)</span></span>;
+
+<span class="hljs-comment">// Control Algorithms</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">PFC_ControlLoop</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>; <span class="hljs-comment">// Totem-Pole PFC control loop</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">DAB_ControlLoop</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>; <span class="hljs-comment">// Dual Active Bridge control loop</span>
+
+<span class="hljs-comment">// Task Scheduler / RTOS</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Scheduler_Init</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Scheduler_AddTask</span><span class="hljs-params">(<span class="hljs-keyword">void</span> (*task)(<span class="hljs-keyword">void</span>), <span class="hljs-keyword">uint32_t</span> interval)</span></span>; <span class="hljs-comment">// Interval in milliseconds</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Scheduler_Run</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;
+
+<span class="hljs-comment">// Data Processing</span>
+<span class="hljs-function"><span class="hljs-keyword">float</span> <span class="hljs-title">Filter_Signal</span><span class="hljs-params">(<span class="hljs-keyword">float</span> input)</span></span>; <span class="hljs-comment">// Example: Low-pass filter</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Buffer_AddData</span><span class="hljs-params">(<span class="hljs-keyword">float</span> data)</span></span>; <span class="hljs-comment">// Adds data to a circular buffer</span>
+<span class="hljs-function"><span class="hljs-keyword">float</span> <span class="hljs-title">Buffer_GetAverage</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>; <span class="hljs-comment">// Computes the average of buffered data</span>
+
+<span class="hljs-comment">// System Configurations</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">FaultHandler_Init</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">FaultHandler_Check</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>; <span class="hljs-comment">// Checks for system faults</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">StateMachine_Run</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>; <span class="hljs-comment">// Runs the system state machine</span>
+</div></code></pre>
+<h2 id="control-algorithms"><strong>Control Algorithms</strong></h2>
+<p>Control algorithms are used to process system inputs (e.g., sensor data) and generate outputs (e.g., control signals) for various power converter operations. These algorithms are essential for maintaining system stability, efficiency, and performance.</p>
+<p><strong>PI Controller:</strong></p>
+<ul>
+<li>Purpose: A Proportional-Integral (PI) controller is used for regulating DC quantities, such as voltage or current, in systems like DC-DC converters or Totem-Pole PFC stages.</li>
+<li>Where It Can Be Used:
+<ul>
+<li>Regulating the output voltage of a DC-DC converter.</li>
+<li>Controlling the current in a Totem-Pole PFC stage.</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> {</span>
+    <span class="hljs-keyword">float</span> kp;       <span class="hljs-comment">// Proportional gain</span>
+    <span class="hljs-keyword">float</span> ki;       <span class="hljs-comment">// Integral gain</span>
+    <span class="hljs-keyword">float</span> integral; <span class="hljs-comment">// Integral accumulator</span>
+    <span class="hljs-keyword">float</span> <span class="hljs-built_in">max</span>;      <span class="hljs-comment">// Maximum output limit</span>
+    <span class="hljs-keyword">float</span> <span class="hljs-built_in">min</span>;      <span class="hljs-comment">// Minimum output limit</span>
+} PI_Controller;
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">PI_Controller_Init</span><span class="hljs-params">(PI_Controller *controller, <span class="hljs-keyword">float</span> kp, <span class="hljs-keyword">float</span> ki, <span class="hljs-keyword">float</span> <span class="hljs-built_in">min</span>, <span class="hljs-keyword">float</span> <span class="hljs-built_in">max</span>)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">float</span> <span class="hljs-title">PI_Controller_Compute</span><span class="hljs-params">(PI_Controller *controller, <span class="hljs-keyword">float</span> error)</span></span>;
+</div></code></pre>
+<p><strong>PR Controller:</strong></p>
+<ul>
+<li>Purpose: A Proportional-Resonant (PR) controller is used for regulating AC quantities, such as sinusoidal currents or voltages, in systems like inverters or grid-connected converters.</li>
+<li>Where It Can Be Used:
+<ul>
+<li>Controlling the AC current in a grid-connected inverter.</li>
+<li>Regulating the output voltage of an AC power supply.</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> {</span>
+    <span class="hljs-keyword">float</span> kp;       <span class="hljs-comment">// Proportional gain</span>
+    <span class="hljs-keyword">float</span> ki;       <span class="hljs-comment">// Integral gain</span>
+    <span class="hljs-keyword">float</span> kr;       <span class="hljs-comment">// Resonant gain</span>
+    <span class="hljs-keyword">float</span> omega;    <span class="hljs-comment">// Resonant frequency</span>
+    <span class="hljs-keyword">float</span> integral; <span class="hljs-comment">// Integral accumulator</span>
+    <span class="hljs-keyword">float</span> prev_error; <span class="hljs-comment">// Previous error</span>
+} PR_Controller;
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">PR_Controller_Init</span><span class="hljs-params">(PR_Controller *controller, <span class="hljs-keyword">float</span> kp, <span class="hljs-keyword">float</span> ki, <span class="hljs-keyword">float</span> kr, <span class="hljs-keyword">float</span> omega)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">float</span> <span class="hljs-title">PR_Controller_Compute</span><span class="hljs-params">(PR_Controller *controller, <span class="hljs-keyword">float</span> error)</span></span>;
+</div></code></pre>
+<p><strong>TOGI_PLL:</strong></p>
+<ul>
+<li>Purpose: A Second-Order Generalized Integrator Phase-Locked Loop (TOGI_PLL) is used for estimating the phase and frequency of an AC signal, which is critical for synchronization in grid-connected systems.</li>
+<li>Where It Can Be Used:
+<ul>
+<li>Synchronizing a grid-connected inverter with the AC grid.</li>
+<li>Estimating the phase and frequency of an AC signal in power systems.</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> {</span>
+    <span class="hljs-keyword">float</span> kp;       <span class="hljs-comment">// Proportional gain</span>
+    <span class="hljs-keyword">float</span> ki;       <span class="hljs-comment">// Integral gain</span>
+    <span class="hljs-keyword">float</span> frequency; <span class="hljs-comment">// Estimated frequency</span>
+    <span class="hljs-keyword">float</span> phase;    <span class="hljs-comment">// Estimated phase</span>
+    <span class="hljs-keyword">float</span> integral; <span class="hljs-comment">// Integral accumulator</span>
+} TOGI_PLL;
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">TOGI_PLL_Init</span><span class="hljs-params">(TOGI_PLL *pll, <span class="hljs-keyword">float</span> kp, <span class="hljs-keyword">float</span> ki)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">TOGI_PLL_Update</span><span class="hljs-params">(TOGI_PLL *pll, <span class="hljs-keyword">float</span> input, <span class="hljs-keyword">float</span> dt)</span></span>;
+</div></code></pre>
+<h2 id="3-application-layer"><strong>3. Application Layer</strong></h2>
+<p>The Application Layer handles system-level initialization, user interfaces, and performance monitoring. It interacts with the Middleware Layer to execute system-level tasks and provide a user-friendly interface.</p>
+<h3 id="responsibilities">Responsibilities:</h3>
+<ul>
+<li>System initialization and startup.</li>
+<li>Managing user interfaces (e.g., displaying messages, reading inputs).</li>
+<li>Setting and monitoring system modes.</li>
+<li>Logging and displaying performance metrics.</li>
+<li>Providing APIs for external control and parameter management.</li>
+</ul>
+<h3 id="functions-in-the-application-layer">Functions in the Application Layer:</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// System Initialization</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">System_Init</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>; <span class="hljs-comment">// Initializes the entire system</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">System_Start</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>; <span class="hljs-comment">// Starts the system operation</span>
+
+<span class="hljs-comment">// User Interfaces</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">UI_DisplayMessage</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *message)</span></span>; <span class="hljs-comment">// Displays a message to the user</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">UI_ReadInput</span><span class="hljs-params">(<span class="hljs-keyword">uint8_t</span> *input)</span></span>; <span class="hljs-comment">// Reads user input (e.g., button press)</span>
+
+<span class="hljs-comment">// System Modes</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">System_SetMode</span><span class="hljs-params">(<span class="hljs-keyword">uint8_t</span> mode)</span></span>; <span class="hljs-comment">// Sets the system mode</span>
+<span class="hljs-function"><span class="hljs-keyword">uint8_t</span> <span class="hljs-title">System_GetMode</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>; <span class="hljs-comment">// Gets the current system mode</span>
+
+<span class="hljs-comment">// Performance Monitoring</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Monitor_LogData</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>; <span class="hljs-comment">// Logs system performance data</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Monitor_DisplayPerformance</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>; <span class="hljs-comment">// Displays performance metrics</span>
+
+<span class="hljs-comment">// APIs for External Control</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">API_SetParameter</span><span class="hljs-params">(<span class="hljs-keyword">uint8_t</span> paramId, <span class="hljs-keyword">float</span> value)</span></span>; <span class="hljs-comment">// Sets a parameter value</span>
+<span class="hljs-function"><span class="hljs-keyword">float</span> <span class="hljs-title">API_GetParameter</span><span class="hljs-params">(<span class="hljs-keyword">uint8_t</span> paramId)</span></span>; <span class="hljs-comment">// Gets a parameter value</span>
+</div></code></pre>
+<p><strong>How These Algorithms Fit in the System</strong></p>
+<ul>
+<li>Driver Layer: Provides raw data from sensors (e.g., ADC values) and actuates hardware (e.g., PWM signals).</li>
+<li>Middleware Layer: Processes the raw data using control algorithms (e.g., PI, PR, TOGI_PLL) to generate control signals.</li>
+<li>Application Layer: Uses the control signals to implement system-level behavior (e.g., regulating output voltage, synchronizing with the grid).</li>
+</ul>
+<h2 id="summary-of-layer-responsibilities">Summary of Layer Responsibilities</h2>
+<table>
+<thead>
+<tr>
+<th><strong>Layer</strong></th>
+<th><strong>Responsibilities</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Driver Layer</strong></td>
+<td>Direct hardware interaction, peripheral initialization, and interrupt handling.</td>
+</tr>
+<tr>
+<td><strong>Middleware Layer</strong></td>
+<td>Protocols, control algorithms, task scheduling, data processing, and fault handling.</td>
+</tr>
+<tr>
+<td><strong>Application Layer</strong></td>
+<td>System-level behavior, user interfaces, performance monitoring, and external APIs.</td>
+</tr>
+</tbody>
+</table>
+<h1 id="header-file-description-mycontrollerh">Header File Description: <code>My_Controller.h</code></h1>
+<p>This header file defines the implementation of <strong>PI (Proportional-Integral)</strong> and <strong>PR (Proportional-Resonant)</strong> controllers. These controllers are widely used in control systems for regulating DC and AC signals, respectively. The file includes initialization, computation, and reset functions for both controllers.</p>
+<hr>
+<h2 id="1-pi-controller"><strong>1. PI Controller</strong></h2>
+<p>The <strong>PI Controller</strong> is used for regulating DC quantities, such as voltage or current, in systems like DC-DC converters or Totem-Pole PFC stages.</p>
+<h3 id="structure-piparamstypedef"><strong>Structure: <code>PI_Params_Typedef</code></strong></h3>
+<p>This structure holds the parameters and state variables for the PI controller.</p>
+<ul>
+<li><strong>Fields</strong>:
+<ul>
+<li><code>kp</code>: Proportional gain.</li>
+<li><code>ki</code>: Integral gain.</li>
+<li><code>Ts</code>: Sampling time (time interval between successive controller updates).</li>
+<li><code>integral</code>: Integral term accumulator.</li>
+<li><code>output</code>: Current output of the PI controller.</li>
+<li><code>output_min</code>: Minimum output limit.</li>
+<li><code>output_max</code>: Maximum output limit.</li>
+<li><code>reset_flag</code>: Reset flag (1 = reset integral term, 0 = normal operation).</li>
+</ul>
+</li>
+</ul>
+<h3 id="functions"><strong>Functions</strong></h3>
+<ol>
+<li>
+<p><strong><code>PI_Params_Init</code></strong>:</p>
+<ul>
+<li>Initializes the <code>PI_Params_Typedef</code> structure with the specified parameters.</li>
+<li><strong>Parameters</strong>:
+<ul>
+<li><code>PI_Params</code>: Pointer to the <code>PI_Params_Typedef</code> structure.</li>
+<li><code>kp</code>: Proportional gain.</li>
+<li><code>ki</code>: Integral gain.</li>
+<li><code>Ts</code>: Sampling time.</li>
+<li><code>output_min</code>: Minimum output limit.</li>
+<li><code>output_max</code>: Maximum output limit.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><code>PIController</code></strong>:</p>
+<ul>
+<li>Computes the PI control output based on the given error and updates the controller state.</li>
+<li><strong>Parameters</strong>:
+<ul>
+<li><code>PI_Params</code>: Pointer to the <code>PI_Params_Typedef</code> structure.</li>
+<li><code>error</code>: The error signal (setpoint - measured value).</li>
+<li><code>Ts</code>: Sampling time.</li>
+</ul>
+</li>
+<li><strong>Returns</strong>: The computed control output.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>PIController_Reset</code></strong>:</p>
+<ul>
+<li>Resets the integral term of the PI controller by setting it to zero.</li>
+<li><strong>Parameters</strong>:
+<ul>
+<li><code>PI_Params</code>: Pointer to the <code>PI_Params_Typedef</code> structure.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="2-pr-controller"><strong>2. PR Controller</strong></h2>
+<p>The <strong>PR Controller</strong> is used for regulating AC quantities, such as sinusoidal currents or voltages, in systems like inverters or grid-connected converters.</p>
+<h3 id="structure-prparamstypedef"><strong>Structure: <code>PR_Params_Typedef</code></strong></h3>
+<p>This structure holds the parameters and state variables for the PR controller.</p>
+<ul>
+<li><strong>Fields</strong>:
+<ul>
+<li><code>kpr</code>: Proportional gain.</li>
+<li><code>kir</code>: Resonant gain.</li>
+<li><code>wc</code>: Bandwidth of the resonant controller.</li>
+<li><code>w0</code>: Resonant frequency (e.g., grid frequency in radians per second).</li>
+<li><code>u1</code>, <code>u2</code>: Internal state variables for the resonant controller.</li>
+<li><code>Ts</code>: Sampling time.</li>
+<li><code>output</code>: Current output of the PR controller.</li>
+<li><code>output_min</code>: Minimum output limit.</li>
+<li><code>output_max</code>: Maximum output limit.</li>
+<li><code>k</code>: Precomputed gain factor for the resonant controller.</li>
+<li><code>W0Ts</code>: Precomputed term for the resonant frequency and sampling time.</li>
+<li><code>reset_flag</code>: Reset flag (1 = reset internal states, 0 = normal operation).</li>
+</ul>
+</li>
+</ul>
+<h3 id="functions"><strong>Functions</strong></h3>
+<ol>
+<li>
+<p><strong><code>PR_Params_Init</code></strong>:</p>
+<ul>
+<li>Initializes the <code>PR_Params_Typedef</code> structure with the specified parameters.</li>
+<li><strong>Parameters</strong>:
+<ul>
+<li><code>PR_Params</code>: Pointer to the <code>PR_Params_Typedef</code> structure.</li>
+<li><code>kpr</code>: Proportional gain.</li>
+<li><code>kir</code>: Resonant gain.</li>
+<li><code>Ts</code>: Sampling time.</li>
+<li><code>W0</code>: Resonant frequency.</li>
+<li><code>Wc</code>: Bandwidth of the resonant controller.</li>
+<li><code>output_max</code>: Maximum output limit.</li>
+<li><code>output_min</code>: Minimum output limit.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><code>PRController</code></strong>:</p>
+<ul>
+<li>Computes the PR control output based on the measured signal and updates the controller state.</li>
+<li><strong>Parameters</strong>:
+<ul>
+<li><code>PR_Params</code>: Pointer to the <code>PR_Params_Typedef</code> structure.</li>
+<li><code>measure</code>: The measured signal (e.g., AC current or voltage).</li>
+<li><code>Ts</code>: Sampling time.</li>
+</ul>
+</li>
+<li><strong>Returns</strong>: The computed control output.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>PRController_Reset</code></strong>:</p>
+<ul>
+<li>Resets the internal states of the PR controller by setting them to zero.</li>
+<li><strong>Parameters</strong>:
+<ul>
+<li><code>PR_Params</code>: Pointer to the <code>PR_Params_Typedef</code> structure.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="usage"><strong>Usage</strong></h2>
+<h3 id="pi-controller"><strong>PI Controller</strong></h3>
+<ol>
+<li><strong>Initialization</strong>:
+Use <code>PI_Params_Init</code> to configure the PI controller parameters.</li>
+<li><strong>Computation</strong>:
+Call <code>PIController</code> in a control loop to compute the control output based on the error signal.</li>
+<li><strong>Reset</strong>:
+Use <code>PIController_Reset</code> to reset the integral term when needed (e.g., during system restarts).</li>
+</ol>
+<h3 id="pr-controller"><strong>PR Controller</strong></h3>
+<ol>
+<li><strong>Initialization</strong>:
+Use <code>PR_Params_Init</code> to configure the PR controller parameters.</li>
+<li><strong>Computation</strong>:
+Call <code>PRController</code> in a control loop to compute the control output based on the measured signal.</li>
+<li><strong>Reset</strong>:
+Use <code>PRController_Reset</code> to reset the internal states when needed (e.g., during system restarts).</li>
+</ol>
+<hr>
+<h2 id="applications"><strong>Applications</strong></h2>
+<ul>
+<li><strong>PI Controller</strong>:
+<ul>
+<li>Regulating DC quantities like voltage or current in DC-DC converters or Totem-Pole PFC stages.</li>
+</ul>
+</li>
+<li><strong>PR Controller</strong>:
+<ul>
+<li>Controlling AC quantities like sinusoidal currents or voltages in grid-connected inverters or AC power supplies.</li>
+</ul>
+</li>
+</ul>
+<p>This header file provides a modular and reusable implementation of PI and PR controllers for various control system applications.</p>
+<h1 id="togi-pll-library-documentation">TOGI PLL Library Documentation</h1>
+<p><strong>Author</strong>: The-Tiep Pham<br>
+<strong>Revision</strong>: April 06, 2025</p>
+<hr>
+<h2 id="overview">Overview</h2>
+<p>This library implements a grid synchronization technique using a <strong>Time-Optimal Generalized Integrator Phase-Locked Loop (TOGI-PLL)</strong>. It provides robust performance under conditions such as:</p>
+<ul>
+<li><strong>DC offset presence</strong></li>
+<li><strong>Frequency deviation</strong></li>
+<li><strong>Unbalanced or distorted voltage</strong></li>
+</ul>
+<p>It is inspired by the following publication:</p>
+<blockquote>
+<p><strong>Zhang, C. et al. (2018)</strong><br>
+<em>A grid synchronization PLL method based on mixed second- and third-order generalized integrator for DC offset elimination and frequency adaptability</em><br>
+IEEE Journal of Emerging and Selected Topics in Power Electronics, 6(3), pp.1517–1526.</p>
+</blockquote>
+<hr>
+<h2 id="purpose-of-the-togi-library">Purpose of the TOGI Library</h2>
+<p>The goal is to synchronize with a grid signal (e.g., grid voltage) by extracting the <strong>phase angle</strong>, <strong>angular frequency</strong>, and <strong>dq-axis components</strong> while rejecting any <strong>DC offset</strong> in the measurement. This is critical for applications such as:</p>
+<ul>
+<li>Grid-connected inverters</li>
+<li>Synchronization of control systems to AC mains</li>
+<li>Frequency estimation in digital controllers</li>
+</ul>
+<hr>
+<h2 id="data-structure-togipllparamstypedef">Data Structure: <code>TOGI_PLL_Params_Typedef</code></h2>
+<p>This structure holds all the dynamic variables of the PLL:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Vpk</code></td>
+<td>Peak detected voltage amplitude</td>
+</tr>
+<tr>
+<td><code>Omega</code></td>
+<td>Estimated grid angular frequency (rad/s)</td>
+</tr>
+<tr>
+<td><code>theta</code></td>
+<td>Estimated grid phase angle (radians)</td>
+</tr>
+<tr>
+<td><code>V_Offset</code></td>
+<td>Estimated DC component of the input</td>
+</tr>
+<tr>
+<td><code>Val</code>, <code>Vbe</code></td>
+<td>Generalized integrator outputs (α-β)</td>
+</tr>
+<tr>
+<td><code>Val_Real</code>, <code>Vbe_Real</code></td>
+<td>Corrected α-β voltages (DC-free)</td>
+</tr>
+<tr>
+<td><code>Vd</code>, <code>Vq</code></td>
+<td>d-q voltages (used for PLL regulation)</td>
+</tr>
+<tr>
+<td><code>Sine</code>, <code>Cose</code></td>
+<td>Sine and cosine of the phase angle</td>
+</tr>
+<tr>
+<td><code>TOGI_Ready_Flag</code></td>
+<td>Indicates if PLL is locked and ready (1: true, 0: false)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="function-void-togipllparamsinit">Function: <code>void TOGI_PLL_Params_Init(...)</code></h2>
+<h3 id="purpose"><strong>Purpose</strong></h3>
+<p>Initializes all fields in the <code>TOGI_PLL_Params_Typedef</code> structure to default values (mostly zeros). This function should be called once before starting the PLL loop.</p>
+<h3 id="input"><strong>Input</strong></h3>
+<ul>
+<li><code>TOGI_PLL_Params</code>: Pointer to the structure that stores the internal states.</li>
+</ul>
+<h3 id="output"><strong>Output</strong></h3>
+<ul>
+<li>The structure is updated with default values.</li>
+</ul>
+<hr>
+<h2 id="function-void-togipll">Function: <code>void TOGI_PLL(...)</code></h2>
+<h3 id="purpose"><strong>Purpose</strong></h3>
+<p>Executes one iteration of the TOGI PLL. It processes the input voltage to estimate the grid phase, frequency, and voltage components in α-β and d-q frames.</p>
+<h3 id="inputs"><strong>Inputs</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TOGI_PLL_Params</code></td>
+<td><code>TOGI_PLL_Params_Typedef*</code></td>
+<td>Pointer to the state structure</td>
+</tr>
+<tr>
+<td><code>Vac</code></td>
+<td><code>float</code></td>
+<td>Instantaneous AC input voltage</td>
+</tr>
+<tr>
+<td><code>Ts</code></td>
+<td><code>float</code></td>
+<td>Sampling period (seconds)</td>
+</tr>
+<tr>
+<td><code>W0</code></td>
+<td><code>float</code></td>
+<td>Nominal angular frequency (e.g., 2π×50 = 314.16 rad/s)</td>
+</tr>
+<tr>
+<td><code>kp_PLL</code></td>
+<td><code>float</code></td>
+<td>Proportional gain for PI controller</td>
+</tr>
+<tr>
+<td><code>ki_PLL</code></td>
+<td><code>float</code></td>
+<td>Integral gain for PI controller</td>
+</tr>
+</tbody>
+</table>
+<h3 id="outputs"><strong>Outputs</strong></h3>
+<ul>
+<li>Updates the internal state structure:
+<ul>
+<li><code>Omega</code>, <code>theta</code> are updated to reflect phase and frequency.</li>
+<li><code>Vd</code>, <code>Vq</code> are computed for synchronization control.</li>
+<li><code>TOGI_Ready_Flag</code> is set to 1 if the PLL is stable.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="how-it-works"><strong>How It Works</strong></h3>
+<ol>
+<li>
+<p><strong>DC Offset Elimination</strong></p>
+<ul>
+<li>The voltage input is filtered through second and third-order integrators to isolate the DC component (<code>V_Offset</code>) and obtain α-β components (<code>Val</code>, <code>Vbe</code>).</li>
+</ul>
+</li>
+<li>
+<p><strong>α-β to d-q Transformation</strong></p>
+<ul>
+<li>Using the estimated <code>theta</code>, the algorithm projects α-β voltages into the rotating d-q frame.</li>
+</ul>
+</li>
+<li>
+<p><strong>PLL PI Controller</strong></p>
+<ul>
+<li>The <code>Vd</code> component is fed into a PI controller.</li>
+<li><code>Omega</code> is adjusted based on the controller output, tracking the grid frequency.</li>
+<li>The phase <code>theta</code> is incremented based on <code>Omega</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Lock Detection</strong></p>
+<ul>
+<li>If <code>Vd</code> is near zero and <code>-Vq</code> exceeds a threshold, it means the PLL has locked onto the signal, and <code>TOGI_Ready_Flag</code> is set.</li>
+</ul>
+</li>
+<li>
+<p><strong>Phase Wrap-around</strong></p>
+<ul>
+<li><code>theta</code> is wrapped to [0, 2π] after each update.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="suggested-parameters">Suggested Parameters</h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Typical Value</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Ts</code></td>
+<td><code>1e-4</code> s</td>
+<td>For 10 kHz control frequency</td>
+</tr>
+<tr>
+<td><code>W0</code></td>
+<td><code>314.16</code> rad/s</td>
+<td>50 Hz system</td>
+</tr>
+<tr>
+<td><code>kp_PLL</code></td>
+<td><code>10.0</code></td>
+<td>Proportional gain (tune based on bandwidth)</td>
+</tr>
+<tr>
+<td><code>ki_PLL</code></td>
+<td><code>1000.0</code></td>
+<td>Integral gain (to eliminate steady-state error)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="applications">Applications</h2>
+<ul>
+<li>Digital grid synchronization</li>
+<li>AC signal conditioning</li>
+<li>Frequency/phase tracking</li>
+<li>Real-time embedded control (e.g., STM32, TMS320, etc.)</li>
+</ul>
+<hr>
+<h2 id="example-usage-pseudocode">Example Usage (Pseudocode)</h2>
+<pre class="hljs"><code><div>TOGI_PLL_Params_Typedef pll_params;
+TOGI_PLL_Params_Init(&amp;pll_params);
+
+<span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) {
+    <span class="hljs-keyword">float</span> Vac = read_adc_voltage();
+    TOGI_PLL(&amp;pll_params, Vac, <span class="hljs-number">1e-4</span>, <span class="hljs-number">314.16</span>, <span class="hljs-number">10.0</span>, <span class="hljs-number">1000.0</span>);
+
+    <span class="hljs-keyword">if</span> (pll_params.TOGI_Ready_Flag) {
+        use_theta(pll_params.theta);  <span class="hljs-comment">// Feed to control loop</span>
+    }
+}
+
+</div></code></pre>
+
+</body>
+</html>
